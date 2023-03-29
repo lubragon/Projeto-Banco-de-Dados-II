@@ -39,25 +39,14 @@ ORDER BY Name ASC, t.txn_date;
 
 */
 
-SELECT DISTINCT
-	CONCAT(e.fname, ' ', e.lname) 	AS Name,
-	COUNT(a.open_date) 		AS qtTrans
-FROM employee e
-LEFT OUTER JOIN account a ON (e.emp_id = a.open_emp_id)
-GROUP BY Name
-ORDER BY Name ASC;
-
-
-
-SELECT DISTINCT
-	CONCAT(e.fname, ' ', e.lname) 	AS Name,
-	COUNT(t.txn_date) 		AS qtTrans
+SELECT 	
+	CONCAT(e.fname, ' ', e.lname) 			AS Name,
+	COUNT(t.txn_id) 				AS qtTrans
 FROM account a
 RIGHT OUTER JOIN employee e ON(e.emp_id = a.open_emp_id)
-INNER JOIN transaction t ON(a.account_id = t.account_id)
-GROUP BY Name;
-
-
+LEFT JOIN transaction t ON(a.account_id = t.account_id)
+GROUP BY Name
+ORDER BY Name ASC, t.txn_date;
 
 
 /*
