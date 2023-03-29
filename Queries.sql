@@ -1,7 +1,3 @@
-CREATE SCHEMA bank;
-use bank;
-show tables;
-
 /* 
 	Questão 1:
 	Escreva uma consulta que retorne o nome e sobrenome de todos os administradores (officer) com o nome
@@ -24,8 +20,8 @@ INNER JOIN customer c ON (c.cust_id = b.cust_id);
 */
 
 SELECT DISTINCT
-		'FIS' 							AS Type,
-		CONCAT(i.fname, ' ', i.lname) 	AS Name
+	'FIS' 					AS Type,
+	CONCAT(i.fname, ' ', i.lname) 		AS Name
 FROM customer c
 INNER JOIN individual i ON(c.cust_id = i.cust_id)
 INNER JOIN account a ON(c.cust_id = a.cust_id)
@@ -33,7 +29,7 @@ INNER JOIN branch bra ON(a.open_branch_id = bra.branch_id)
 WHERE bra.city != c.city
 UNION
 SELECT
-		'JUR',
+	'JUR',
         b.name 
 FROM customer c
 INNER JOIN business b ON(c.cust_id = b.cust_id )
@@ -54,8 +50,8 @@ WHERE bra.city != c.city
 */
 
 SELECT DISTINCT
-	CONCAT(e.fname, ' ', e.lname) AS Name,
-	COUNT(a.open_date) AS qtTrans
+	CONCAT(e.fname, ' ', e.lname) 	AS Name,
+	COUNT(a.open_date) 		AS qtTrans
 FROM employee e
 LEFT OUTER JOIN account a ON (e.emp_id = a.open_emp_id)
 GROUP BY Name
@@ -64,8 +60,8 @@ ORDER BY Name ASC;
 
 
 SELECT DISTINCT
-	CONCAT(e.fname, ' ', e.lname) AS Name,
-	COUNT(t.txn_date) AS qtTrans
+	CONCAT(e.fname, ' ', e.lname) 	AS Name,
+	COUNT(t.txn_date) 		AS qtTrans
 FROM account a
 RIGHT OUTER JOIN employee e ON(e.emp_id = a.open_emp_id)
 INNER JOIN transaction t ON(a.account_id = t.account_id)
