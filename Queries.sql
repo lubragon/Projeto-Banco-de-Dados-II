@@ -19,24 +19,14 @@ INNER JOIN customer c ON (c.cust_id = b.cust_id);
 	das pessoas físicas) que possuem uma conta em uma cidade diferente da cidade de estabelecimento.
 */
 
-SELECT DISTINCT
-	'FIS' 					AS Type,
-	CONCAT(i.fname, ' ', i.lname) 		AS Name
-FROM customer c
-INNER JOIN individual i ON(c.cust_id = i.cust_id)
-INNER JOIN account a ON(c.cust_id = a.cust_id)
-INNER JOIN branch bra ON(a.open_branch_id = bra.branch_id)
-WHERE bra.city != c.city
-UNION
-SELECT
-	'JUR',
-        b.name 
-FROM customer c
-INNER JOIN business b ON(c.cust_id = b.cust_id )
-INNER JOIN account a ON(c.cust_id = a.cust_id)
-INNER JOIN branch bra ON(a.open_branch_id = bra.branch_id)
-WHERE bra.city != c.city
-
+SELECT 
+	CONCAT(e.fname, ' ', e.lname) 	AS Name,
+	COUNT(t.txn_id) 				AS qtTrans
+FROM account a
+RIGHT OUTER JOIN employee e ON(e.emp_id = a.open_emp_id)
+LEFT JOIN transaction t ON(a.account_id = t.account_id)
+GROUP BY Name
+ORDER BY Name ASC, t.txn_date;
 
 
 
