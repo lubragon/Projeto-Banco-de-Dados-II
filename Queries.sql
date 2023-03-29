@@ -20,7 +20,7 @@ INNER JOIN customer c ON (c.cust_id = b.cust_id);
 */
 
 SELECT 
-	CONCAT(e.fname, ' ', e.lname) 	AS Name,
+	CONCAT(e.fname, ' ', e.lname) 			AS Name,
 	COUNT(t.txn_id) 				AS qtTrans
 FROM account a
 RIGHT OUTER JOIN employee e ON(e.emp_id = a.open_emp_id)
